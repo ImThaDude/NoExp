@@ -25,6 +25,7 @@ public class NoExp extends JavaPlugin implements Listener {
     
     //Data structure to hold the exp obtained by players before its cancelled.
     HashMap<UUID, Short> PlayerOutExp;
+    //This is the exp needed to get the hp
     short HalfHeartLimit = 5;
     double HealAmt = 1;
     ArrayList<String> Whitelisted;
@@ -66,7 +67,8 @@ public class NoExp extends JavaPlugin implements Listener {
         if (!PlayerOutExp.containsKey(id))
             PlayerOutExp.put(id, (short) 0);
         //This adds the health amount to the changed hp
-        PlayerOutExp.put(id, (short) (PlayerOutExp.get(id) + event.getAmount()));
+        if (event.getAmount() > 0)
+            PlayerOutExp.put(id, (short) (PlayerOutExp.get(id) + event.getAmount()));
         //This subtracts the amount by the difference and adds hp to the player
         while (PlayerOutExp.get(id) >= HalfHeartLimit) {
             PlayerOutExp.put(id, (short) (PlayerOutExp.get(id) - HalfHeartLimit));
@@ -77,7 +79,7 @@ public class NoExp extends JavaPlugin implements Listener {
             }
         }
         //This will prevent on getting exp depending on the world the player is in.
-        if (!Whitelisted.contains(p.getWorld().getName()))
+        if (!Whitelisted.contains(p.getWorld().getName()) && event.getAmount() > 0)
             event.setAmount(0);
     }
     
