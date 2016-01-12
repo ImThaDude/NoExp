@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-/*This plugin will prevent exp from spawning in the world, except if it has a whitelisted world
+/*This plugin will prevent exp players from getting exp, except if it has a whitelisted world
   This plugin will also contain the exp to health conversion.
   Players will regenerate with exp instead
   There is no regen on this game so you regen with exp
