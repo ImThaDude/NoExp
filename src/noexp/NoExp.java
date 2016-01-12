@@ -55,7 +55,7 @@ public class NoExp extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerExit(PlayerQuitEvent event) {
         UUID id = event.getPlayer().getUniqueId();
-        Whitelisted.remove(id);
+        PlayerOutExp.remove(id);
     }
     
     //This is the event triggered as people get exp.
@@ -70,6 +70,14 @@ public class NoExp extends JavaPlugin implements Listener {
         if (event.getAmount() > 0)
             PlayerOutExp.put(id, (short) (PlayerOutExp.get(id) + event.getAmount()));
         //This subtracts the amount by the difference and adds hp to the player
+        processExp(p);
+        //This will prevent on getting exp depending on the world the player is in.
+        if (!Whitelisted.contains(p.getWorld().getName()) && event.getAmount() > 0)
+            event.setAmount(0);
+    }
+    
+    private void processExp(Player p) {
+        UUID id = p.getUniqueId();
         while (PlayerOutExp.get(id) >= HalfHeartLimit) {
             PlayerOutExp.put(id, (short) (PlayerOutExp.get(id) - HalfHeartLimit));
             //Makes sure that the player is not being set to an hp above the normal.
@@ -78,9 +86,6 @@ public class NoExp extends JavaPlugin implements Listener {
                 p.sendMessage("You Healed!");
             }
         }
-        //This will prevent on getting exp depending on the world the player is in.
-        if (!Whitelisted.contains(p.getWorld().getName()) && event.getAmount() > 0)
-            event.setAmount(0);
     }
     
 }
