@@ -29,11 +29,11 @@ public class ExpListener implements Listener {
         if (event.getAmount() > 0) {
             if (p.getHealth() != p.getHealthScale()) {
                 plugin.PlayerOutExp.put(id, (short) (plugin.PlayerOutExp.get(id) + event.getAmount()));
-            //Implemented action bar GUI for players to easily visulize in game
+                //Implemented action bar GUI for players to easily visulize in game
                 //[███}
                 //[█░░}
                 //[░░░}
-                ActionBarAPI.sendActionBar(p, "§d§l" + renderBattery(plugin.PlayerOutExp.get(id), plugin.HalfHeartLimit) + plugin.PlayerOutExp.get(id));
+                ActionBarAPI.sendActionBar(p, "§d§l" + renderBattery(plugin.PlayerOutExp.get(id), plugin.HalfHeartLimit));
 
                 //This subtracts the amount by the difference and adds hp to the player
                 processExp(p);
