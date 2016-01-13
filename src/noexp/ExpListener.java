@@ -1,5 +1,6 @@
 package noexp;
 
+import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import org.bukkit.event.Listener;
 import java.util.UUID;
 import noexp.NoExp;
@@ -24,8 +25,11 @@ public class ExpListener implements Listener {
         if (!plugin.PlayerOutExp.containsKey(id))
             plugin.PlayerOutExp.put(id, (short) 0);
         //This adds the health amount to the changed hp
-        if (event.getAmount() > 0)
+        if (event.getAmount() > 0) {
             plugin.PlayerOutExp.put(id, (short) (plugin.PlayerOutExp.get(id) + event.getAmount()));
+            //Implemented action bar GUI for players to easily visulize in game
+            ActionBarAPI.sendActionBar(p, "§e§l" + plugin.PlayerOutExp.get(id));
+        }
         //This subtracts the amount by the difference and adds hp to the player
         processExp(p);
         //This will prevent on getting exp depending on the world the player is in.

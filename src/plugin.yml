@@ -1,3 +1,5 @@
 name: NoExp
 main: noexp.NoExp
 version: 1.0
+
+depend: [ActionBarAPI-1.3]
