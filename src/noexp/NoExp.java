@@ -31,7 +31,6 @@ public class NoExp extends JavaPlugin implements Listener {
     //Activates the listener to listen for the exp.
     public void onEnable() {
         
-        Whitelisted  = new ArrayList<>();
         getServer().getPluginManager().registerEvents(new ExpListener(this), this);
         getServer().getPluginManager().registerEvents(this, this);
         PlayerOutExp = new HashMap<>();
