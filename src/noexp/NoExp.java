@@ -8,9 +8,8 @@ package noexp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,7 +32,8 @@ public class NoExp extends JavaPlugin implements Listener {
     public void onEnable() {
         
         Whitelisted  = new ArrayList<>();
-        getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new ExpListener(this), this);
+		getServer().getPluginManager().registerEvents(this, this);
         PlayerOutExp = new HashMap<>();
         //This will add the world strings to the whitelisted
         Whitelisted = (ArrayList<String>) this.getConfig().getList("Whitelist");
@@ -55,36 +55,6 @@ public class NoExp extends JavaPlugin implements Listener {
     public void onPlayerExit(PlayerQuitEvent event) {
         UUID id = event.getPlayer().getUniqueId();
         PlayerOutExp.remove(id);
-    }
-    
-    //This is the event triggered as people get exp.
-    @EventHandler
-    public void onExp(PlayerExpChangeEvent event) {
-        Player p = event.getPlayer();
-        UUID id = event.getPlayer().getUniqueId();
-        //This initializes the variable within the data structure.
-        if (!PlayerOutExp.containsKey(id))
-            PlayerOutExp.put(id, (short) 0);
-        //This adds the health amount to the changed hp
-        if (event.getAmount() > 0)
-            PlayerOutExp.put(id, (short) (PlayerOutExp.get(id) + event.getAmount()));
-        //This subtracts the amount by the difference and adds hp to the player
-        processExp(p);
-        //This will prevent on getting exp depending on the world the player is in.
-        if (!Whitelisted.contains(p.getWorld().getName()) && event.getAmount() > 0)
-            event.setAmount(0);
-    }
-    
-    private void processExp(Player p) {
-        UUID id = p.getUniqueId();
-        while (PlayerOutExp.get(id) >= HalfHeartLimit) {
-            PlayerOutExp.put(id, (short) (PlayerOutExp.get(id) - HalfHeartLimit));
-            //Makes sure that the player is not being set to an hp above the normal.
-            if ((p.getHealth() + HealAmt) <= p.getHealthScale()) {
-                p.setHealth(p.getHealth() + HealAmt);
-                p.sendMessage("You Healed!");
-            }
-        }
     }
     
 }
