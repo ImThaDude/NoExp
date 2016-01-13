@@ -4,13 +4,13 @@ import org.bukkit.entity.Player;
 
 public class ExpListener implements Listener {
 	
-	NoExp plugin;
+    NoExp plugin;
 	
-	public ExpListener(NoExp instance) {
-		plugin = instance;
-	}
+    public ExpListener(NoExp instance) {
+	plugin = instance;
+    }
 	
-	//This is the event triggered as people get exp.
+    //This is the event triggered as people get exp.
     @EventHandler
     public void onExp(PlayerExpChangeEvent event) {
         Player p = event.getPlayer();
@@ -30,7 +30,7 @@ public class ExpListener implements Listener {
     
     private void processExp(Player p) {
         UUID id = p.getUniqueId();
-        while (plugin.PlayerOutExp.get(id) >= HalfHeartLimit) {
+        while (plugin.PlayerOutExp.get(id) >= plugin.HalfHeartLimit) {
             plugin.PlayerOutExp.put(id, (short) (plugin.PlayerOutExp.get(id) - plugin.HalfHeartLimit));
             //Makes sure that the player is not being set to an hp above the normal.
             if ((p.getHealth() + HealAmt) <= p.getHealthScale()) {
