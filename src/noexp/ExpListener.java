@@ -1,6 +1,11 @@
+package noexp;
+
 import org.bukkit.event.Listener;
 import java.util.UUID;
+import noexp.NoExp;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerExpChangeEvent;
 
 public class ExpListener implements Listener {
 	
@@ -33,7 +38,7 @@ public class ExpListener implements Listener {
         while (plugin.PlayerOutExp.get(id) >= plugin.HalfHeartLimit) {
             plugin.PlayerOutExp.put(id, (short) (plugin.PlayerOutExp.get(id) - plugin.HalfHeartLimit));
             //Makes sure that the player is not being set to an hp above the normal.
-            if ((p.getHealth() + HealAmt) <= p.getHealthScale()) {
+            if ((p.getHealth() + plugin.HealAmt) <= p.getHealthScale()) {
                 p.setHealth(p.getHealth() + plugin.HealAmt);
                 p.sendMessage("You Healed!");
             }

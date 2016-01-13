@@ -22,18 +22,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class NoExp extends JavaPlugin implements Listener {
     
     //Data structure to hold the exp obtained by players before its cancelled.
-    HashMap<UUID, Short> PlayerOutExp;
+    public HashMap<UUID, Short> PlayerOutExp;
     //This is the exp needed to get the hp
-    short HalfHeartLimit = 5;
-    double HealAmt = 1;
-    ArrayList<String> Whitelisted;
+    public short HalfHeartLimit = 5;
+    public double HealAmt = 1;
+    public ArrayList<String> Whitelisted;
 
     //Activates the listener to listen for the exp.
     public void onEnable() {
         
         Whitelisted  = new ArrayList<>();
         getServer().getPluginManager().registerEvents(new ExpListener(this), this);
-		getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(this, this);
         PlayerOutExp = new HashMap<>();
         //This will add the world strings to the whitelisted
         Whitelisted = (ArrayList<String>) this.getConfig().getList("Whitelist");
