@@ -1,4 +1,4 @@
-HealAmt: 1
-HalfHeartLimit: 20
+HealAmt: 2
+HalfHeartLimit: 30
 Whitelist:
     - DreamWorld

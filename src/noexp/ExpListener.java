@@ -22,19 +22,40 @@ public class ExpListener implements Listener {
         Player p = event.getPlayer();
         UUID id = event.getPlayer().getUniqueId();
         //This initializes the variable within the data structure.
-        if (!plugin.PlayerOutExp.containsKey(id))
+        if (!plugin.PlayerOutExp.containsKey(id)) {
             plugin.PlayerOutExp.put(id, (short) 0);
+        }
         //This adds the health amount to the changed hp
         if (event.getAmount() > 0) {
-            plugin.PlayerOutExp.put(id, (short) (plugin.PlayerOutExp.get(id) + event.getAmount()));
+            if (p.getHealth() != p.getHealthScale()) {
+                plugin.PlayerOutExp.put(id, (short) (plugin.PlayerOutExp.get(id) + event.getAmount()));
             //Implemented action bar GUI for players to easily visulize in game
-            ActionBarAPI.sendActionBar(p, "§e§l" + plugin.PlayerOutExp.get(id));
+                //[███}
+                //[█░░}
+                //[░░░}
+                ActionBarAPI.sendActionBar(p, "§d§l" + renderBattery(plugin.PlayerOutExp.get(id), plugin.HalfHeartLimit) + plugin.PlayerOutExp.get(id));
+
+                //This subtracts the amount by the difference and adds hp to the player
+                processExp(p);
+            }
+
+            //This will prevent on getting exp depending on the world the player is in.
+            if (!plugin.Whitelisted.contains(p.getWorld().getName())) {
+                event.setAmount(0);
+            }
         }
-        //This subtracts the amount by the difference and adds hp to the player
-        processExp(p);
-        //This will prevent on getting exp depending on the world the player is in.
-        if (!plugin.Whitelisted.contains(p.getWorld().getName()) && event.getAmount() > 0)
-            event.setAmount(0);
+    }
+    
+    private String renderBattery(int curr, int to) {
+        //[░░░}
+        if ((curr * 100 / to) < 25)
+            return "[░░░}";
+        else if ((curr * 100 / to) < 50)
+            return "[█░░}";
+        else if ((curr * 100 / to) < 75)
+            return "[██░}";
+        else
+            return "[███}";
     }
     
     private void processExp(Player p) {
@@ -44,7 +65,11 @@ public class ExpListener implements Listener {
             //Makes sure that the player is not being set to an hp above the normal.
             if ((p.getHealth() + plugin.HealAmt) <= p.getHealthScale()) {
                 p.setHealth(p.getHealth() + plugin.HealAmt);
-                p.sendMessage("You Healed!");
+                ActionBarAPI.sendActionBar(p, "§f§l[███}");
+            }
+            else if ((p.getHealth() + plugin.HealAmt) > p.getHealthScale()) {
+                p.setHealth(p.getHealthScale());
+                ActionBarAPI.sendActionBar(p, "§f§l[███}");
             }
         }
     }
