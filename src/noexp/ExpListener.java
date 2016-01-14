@@ -27,7 +27,10 @@ public class ExpListener implements Listener {
         }
         //This adds the health amount to the changed hp
         if (event.getAmount() > 0) {
-            if (p.getHealth() != p.getHealthScale()) {
+            //Added Math ceil because somehow health with equipment is 19.70 hp instead of 20
+            if ((Math.ceil(p.getHealth())) != p.getHealthScale()) {
+                //p.sendMessage(Double.toString(p.getHealthScale()));
+                //p.sendMessage(Double.toString(p.getHealth()));
                 plugin.PlayerOutExp.put(id, (short) (plugin.PlayerOutExp.get(id) + event.getAmount()));
                 //Implemented action bar GUI for players to easily visulize in game
                 //[███}
@@ -40,6 +43,9 @@ public class ExpListener implements Listener {
             }
 
             //This will prevent on getting exp depending on the world the player is in.
+            //This can be added p.getHealth() != p.getHealthScale() to change if you wanna get exp after regen
+            //You can also change set amount value to give a percentage of exp, but that would defeat the point
+            //Change so there is no whitelisted and only way to get exp is dungeons and quests?
             if (!plugin.Whitelisted.contains(p.getWorld().getName())) {
                 event.setAmount(0);
             }
