@@ -8,6 +8,7 @@ package noexp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerExpChangeEvent;
@@ -28,6 +29,9 @@ public class NoExp extends JavaPlugin implements Listener {
     public double HealAmt = 1;
     public ArrayList<String> Whitelisted;
     public double percentageExp;
+    
+    //Netural Regeneration Backup.
+    gameruleBackup NatRenBackup;
 
     //Activates the listener to listen for the exp.
     public void onEnable() {
@@ -41,10 +45,20 @@ public class NoExp extends JavaPlugin implements Listener {
         HalfHeartLimit = (short) this.getConfig().getInt("HalfHeartLimit");
         HealAmt = this.getConfig().getDouble("HealAmt");
         percentageExp = this.getConfig().getDouble("percentageExp");
+        
+        //Added an onenable function to set the worlds naturalRegeneration to false.
+        NatRenBackup = new gameruleBackup("naturalRegeneration", "true");
+        //This backs it up per world and restores.
+        NatRenBackup.backupandset(Bukkit.getWorlds(), "false");
 
     }
 
     public void onDisable() {
+        
+        //This restores to default values.
+        NatRenBackup.restore(Bukkit.getWorlds());
+        //Destroys the variable.
+        NatRenBackup = null;
         
         PlayerOutExp = null;
         Whitelisted = null;
