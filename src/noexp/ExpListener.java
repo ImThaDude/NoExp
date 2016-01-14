@@ -3,7 +3,6 @@ package noexp;
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import org.bukkit.event.Listener;
 import java.util.UUID;
-import noexp.NoExp;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerExpChangeEvent;
