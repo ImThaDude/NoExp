@@ -8,6 +8,8 @@ package noexp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
@@ -46,17 +48,21 @@ public class NoExp extends JavaPlugin implements Listener {
         HealAmt = this.getConfig().getDouble("HealAmt");
         percentageExp = this.getConfig().getDouble("percentageExp");
         
+        Bukkit.getLogger().log(new LogRecord(Level.INFO, "GameruleBackup backing up current."));
         //Added an onenable function to set the worlds naturalRegeneration to false.
         NatRenBackup = new GameruleBackup("naturalRegeneration", "true");
         //This backs it up per world and restores.
         NatRenBackup.backupandset(Bukkit.getWorlds(), "false");
+        Bukkit.getLogger().log(new LogRecord(Level.INFO, "GameruleBackup backedup!"));
 
     }
 
     public void onDisable() {
         
         //This restores to default values.
+        Bukkit.getLogger().log(new LogRecord(Level.INFO, "GameruleBackup restoring."));
         NatRenBackup.restore(Bukkit.getWorlds());
+        Bukkit.getLogger().log(new LogRecord(Level.INFO, "GameruleBackup restored!"));
         //Destroys the variable.
         NatRenBackup = null;
         
