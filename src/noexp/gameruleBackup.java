@@ -12,7 +12,7 @@ import java.util.List;
 import org.bukkit.World;
 
 
-public class gameruleBackup {
+public class GameruleBackup {
     
     //GameruleBackup is an object which will store the values of the worlds on a hashmap.
     //This will be used to restore and backup when needed on any gamerule.
@@ -21,7 +21,7 @@ public class gameruleBackup {
     String gm;
     String wd;
 
-    public gameruleBackup(String gamerule, String worldDefault) {
+    public GameruleBackup(String gamerule, String worldDefault) {
         //Global gamerule and world default of gamerule.
         gm = gamerule;
         wd = worldDefault;

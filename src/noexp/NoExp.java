@@ -31,7 +31,7 @@ public class NoExp extends JavaPlugin implements Listener {
     public double percentageExp;
     
     //Netural Regeneration Backup.
-    gameruleBackup NatRenBackup;
+    GameruleBackup NatRenBackup;
 
     //Activates the listener to listen for the exp.
     public void onEnable() {
@@ -47,7 +47,7 @@ public class NoExp extends JavaPlugin implements Listener {
         percentageExp = this.getConfig().getDouble("percentageExp");
         
         //Added an onenable function to set the worlds naturalRegeneration to false.
-        NatRenBackup = new gameruleBackup("naturalRegeneration", "true");
+        NatRenBackup = new GameruleBackup("naturalRegeneration", "true");
         //This backs it up per world and restores.
         NatRenBackup.backupandset(Bukkit.getWorlds(), "false");
 
