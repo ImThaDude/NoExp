@@ -27,6 +27,7 @@ public class NoExp extends JavaPlugin implements Listener {
     public short HalfHeartLimit = 5;
     public double HealAmt = 1;
     public ArrayList<String> Whitelisted;
+    public double percentageExp;
 
     //Activates the listener to listen for the exp.
     public void onEnable() {
@@ -39,6 +40,7 @@ public class NoExp extends JavaPlugin implements Listener {
         //This will initialize the other values according to config
         HalfHeartLimit = (short) this.getConfig().getInt("HalfHeartLimit");
         HealAmt = this.getConfig().getDouble("HealAmt");
+        percentageExp = this.getConfig().getDouble("percentageExp");
 
     }
 

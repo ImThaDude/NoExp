@@ -49,6 +49,10 @@ public class ExpListener implements Listener {
             if (!plugin.Whitelisted.contains(p.getWorld().getName())) {
                 event.setAmount(0);
             }
+            else {
+                //This is where players can change the amount of experience obtained in whitelisted worlds
+                event.setAmount((int)((double) event.getAmount() * plugin.percentageExp));
+            }
         }
     }
     
