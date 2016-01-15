@@ -2,4 +2,4 @@ name: NoExp
 main: noexp.NoExp
 version: 1.0
 
-depend: [ActionBarAPI]
+depend: [ActionBarAPI,DreamWorldStarter]
