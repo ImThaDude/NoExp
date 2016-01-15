@@ -13,7 +13,6 @@ import java.util.logging.LogRecord;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,6 +36,10 @@ public class NoExp extends JavaPlugin implements Listener {
 
     //Activates the listener to listen for the exp.
     public void onEnable() {
+        
+        //Create config YML folder and stuff.
+        getConfig().options().copyDefaults(true);
+        saveConfig();
         
         getServer().getPluginManager().registerEvents(new ExpListener(this), this);
         getServer().getPluginManager().registerEvents(this, this);
